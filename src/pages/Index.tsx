@@ -28,23 +28,46 @@ function Index() {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'sobre', 'estrategia', 'estudo-caso', 'projetos', 'habilidades', 'contato'];
-      const scrollPosition = window.scrollY + 160;
+    const sectionIds = ['home', 'sobre', 'estrategia', 'estudo-caso', 'projetos', 'habilidades', 'contato'];
 
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
-          }
+    const findSectionFromPoint = () => {
+      const x = window.innerWidth / 2;
+      const y = 140;
+      const elements = document.elementsFromPoint(x, y);
+
+      for (const el of elements) {
+        if (!(el instanceof HTMLElement)) continue;
+        const section = el.closest('[id]') as HTMLElement | null;
+        if (section && section.id && sectionIds.includes(section.id)) {
+          return section.id;
         }
       }
+
+      return null;
     };
 
+    const handleScroll = () => {
+      const visibleSection = findSectionFromPoint();
+      if (visibleSection) {
+        setActiveSection(visibleSection);
+        return;
+      }
+
+      let currentSection = 'home';
+      sectionIds.forEach((sectionId) => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.getBoundingClientRect().top;
+          if (top <= 160) {
+            currentSection = sectionId;
+          }
+        }
+      });
+
+      setActiveSection(currentSection);
+    };
+
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -175,14 +198,6 @@ function Index() {
       {/* HERO SECTION */}
       <section id="home" className="relative min-h-screen flex items-center justify-center px-6 text-center overflow-hidden hero-background">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-        {/* FOTO DE FUNDO DO HERO - painél escuro com imagem em overlay */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <div className="w-[420px] h-[420px] md:w-[560px] md:h-[360px] rounded-3xl overflow-hidden bg-[#071028] shadow-2xl relative">
-            <img src={fotoIbson} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay" />
-            <div className="absolute inset-0 bg-[#071028] bg-opacity-85"></div>
-          </div>
-        </div>
 
         <div className="max-w-4xl mx-auto space-y-6 z-10 flex flex-col items-center" data-reveal>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight title-entrance" data-reveal>
@@ -329,75 +344,76 @@ function Index() {
             </ul>
           </div>
 
-          <span id="projetos" className="block -mt-24 pt-24" />
-          {/* SLIDER 1: DASHBOARD DE VENDAS */}
-          <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative">
-            <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
-            <h3 className="text-xl font-bold text-slate-100 tracking-tight">Dashboard de Metas e Vendas 📊</h3>
-            <p className="text-slate-400 text-sm mt-1 font-light">Análise macro de faturamento, metas comerciais e relacionamento estrutural do modelo de dados.</p>
-            
-            <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
-              <button 
-                onClick={() => setVendasSlide(vendasSlide === 0 ? 1 : 0)}
-                className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                aria-label="Slide anterior"
-              >
-                <FaChevronLeft />
-              </button>
-              <button 
-                onClick={() => setVendasSlide(vendasSlide === 0 ? 1 : 0)}
-                className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                aria-label="Próximo slide"
-              >
-                <FaChevronRight />
-              </button>
+          <div id="projetos" className="space-y-8 pt-8">
+            {/* SLIDER 1: DASHBOARD DE VENDAS */}
+            <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative">
+              <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
+              <h3 className="text-xl font-bold text-slate-100 tracking-tight">Dashboard de Metas e Vendas 📊</h3>
+              <p className="text-slate-400 text-sm mt-1 font-light">Análise macro de faturamento, metas comerciais e relacionamento estrutural do modelo de dados.</p>
+              
+              <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
+                <button 
+                  onClick={() => setVendasSlide(vendasSlide === 0 ? 1 : 0)}
+                  className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
+                  aria-label="Slide anterior"
+                >
+                  <FaChevronLeft />
+                </button>
+                <button 
+                  onClick={() => setVendasSlide(vendasSlide === 0 ? 1 : 0)}
+                  className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
+                  aria-label="Próximo slide"
+                >
+                  <FaChevronRight />
+                </button>
 
-              <div 
-                className="flex transition-transform duration-500 ease-in-out w-[200%] h-full"
-                style={{ transform: `translateX(-${vendasSlide * 50}%)` }}
-              >
-                <div className="w-1/2 h-full relative">
-                  <img src={imgVendas} alt="Dashboard de Vendas Principal" className="w-full h-full object-cover" />
-                </div>
-                <div className="w-1/2 h-full relative">
-                  <img src={imgVendasRela} alt="Relatório de Vendas Detalhado" className="w-full h-full object-cover" />
+                <div 
+                  className="flex transition-transform duration-500 ease-in-out w-[200%] h-full"
+                  style={{ transform: `translateX(-${vendasSlide * 50}%)` }}
+                >
+                  <div className="w-1/2 h-full relative">
+                    <img src={imgVendas} alt="Dashboard de Vendas Principal" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-1/2 h-full relative">
+                    <img src={imgVendasRela} alt="Relatório de Vendas Detalhado" className="w-full h-full object-cover" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* SLIDER 2: DASHBOARD DE LOGÍSTICA / FINANCEIRO */}
-          <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative">
-            <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
-            <h3 className="text-xl font-bold text-slate-100 tracking-tight">Dashboard de Logística & Finanças 🚚</h3>
-            <p className="text-slate-400 text-sm mt-1 font-light">Controle fino de prazos de entrega, OTIF, eficiência de frotas e visões analíticas integradas.</p>
-            
-            <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
-              <button 
-                onClick={() => setLogisticaSlide(logisticaSlide === 0 ? 1 : 0)}
-                className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                aria-label="Slide anterior"
-              >
-                <FaChevronLeft />
-              </button>
-              <button 
-                onClick={() => setLogisticaSlide(logisticaSlide === 0 ? 1 : 0)}
-                className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                aria-label="Próximo slide"
-              >
-                <FaChevronRight />
-              </button>
+            {/* SLIDER 2: DASHBOARD DE LOGÍSTICA / FINANCEIRO */}
+            <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative">
+              <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
+              <h3 className="text-xl font-bold text-slate-100 tracking-tight">Dashboard de Logística & Finanças 🚚</h3>
+              <p className="text-slate-400 text-sm mt-1 font-light">Controle fino de prazos de entrega, OTIF, eficiência de frotas e visões analíticas integradas.</p>
+              
+              <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
+                <button 
+                  onClick={() => setLogisticaSlide(logisticaSlide === 0 ? 1 : 0)}
+                  className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
+                  aria-label="Slide anterior"
+                >
+                  <FaChevronLeft />
+                </button>
+                <button 
+                  onClick={() => setLogisticaSlide(logisticaSlide === 0 ? 1 : 0)}
+                  className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
+                  aria-label="Próximo slide"
+                >
+                  <FaChevronRight />
+                </button>
 
-              <div 
-                className="flex transition-transform duration-500 ease-in-out w-[200%] h-full"
-                style={{ transform: `translateX(-${logisticaSlide * 50}%)` }}
-              >
-                <div className="w-1/2 h-full relative">
-                  <img src={imgPedidos} alt="Painel Logístico Geral" className="w-full h-full object-contain" />
-                </div>
-                <div className="w-1/2 h-full relative">
-                  {/* VARIÁVEL CORRIGIDA DE logoLogistica PARA financeiro */}
-                  <img src={financeiro} alt="Dashboard Financeiro" className="w-full h-full object-contain" />
+                <div 
+                  className="flex transition-transform duration-500 ease-in-out w-[200%] h-full"
+                  style={{ transform: `translateX(-${logisticaSlide * 50}%)` }}
+                >
+                  <div className="w-1/2 h-full relative">
+                    <img src={imgPedidos} alt="Painel Logístico Geral" className="w-full h-full object-contain" />
+                  </div>
+                  <div className="w-1/2 h-full relative">
+                    {/* VARIÁVEL CORRIGIDA DE logoLogistica PARA financeiro */}
+                    <img src={financeiro} alt="Dashboard Financeiro" className="w-full h-full object-contain" />
+                  </div>
                 </div>
               </div>
             </div>
