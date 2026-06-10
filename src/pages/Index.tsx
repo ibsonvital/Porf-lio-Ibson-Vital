@@ -210,7 +210,7 @@ function Index() {
           <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
             <div className="relative">
               <button 
-                onClick={() => scrollToSection('estudo-caso')}
+                onClick={() => scrollToSection('projetos')}
                 className="bg-cyan-500 hover:bg-cyan-400 text-[#070b12] font-bold px-8 py-3.5 rounded-md transition-all duration-300 hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:-translate-y-0.5 group flex items-center justify-center relative"
               >
                 Ver Projetos
