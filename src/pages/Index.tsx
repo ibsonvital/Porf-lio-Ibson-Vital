@@ -7,6 +7,8 @@ import financeiro from '../../img/financeiro.png';
 import imgPedidos from '../../img/pedidos.png';
 import imgVendas from '../../img/vendas.png';
 import imgVendasRela from '../../img/vendasrela.png';
+import imgDashRH from '../../img/DASHRH.png';
+import imgSqlRH from '../../img/SQLRH.png';
 import pdfCurriculo from '../../img/curriculo.pdf';
 import certAnaliseDados from '../../certificados/Certificado analise de dados.png';
 import certPowerSql from '../../certificados/Certificado Power bi + SQL.jpg';
@@ -22,9 +24,9 @@ function Index() {
   const [photoError, setPhotoError] = useState(false);
   const [selectedCertificate, setSelectedCertificate] = useState<{ title: string; subtitle: string; src: string; type: 'image' | 'pdf' } | null>(null);
   
-  // Estados para controlar os slides dos dashboards
-  const [vendasSlide, setVendasSlide] = useState(0);
-  const [logisticaSlide, setLogisticaSlide] = useState(0);
+  // Estados para controlar o modal de projetos
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [projectSlide, setProjectSlide] = useState(0);
 
   const certificates = [
     {
@@ -68,6 +70,33 @@ function Index() {
       subtitle: 'Certificado Python',
       src: certPython,
       type: 'pdf' as const,
+    },
+  ];
+
+  const projects = [
+    {
+      id: 'vendas',
+      title: 'Dashboard de Metas e Vendas',
+      description: 'Análise macro de faturamento, metas comerciais e relacionamento estrutural do modelo de dados.',
+      icon: '📊',
+      tools: ['Power BI', 'Excel', 'SQL'],
+      images: [imgVendas, imgVendasRela],
+    },
+    {
+      id: 'logistica',
+      title: 'Dashboard de Logística & Finanças',
+      description: 'Controle fino de prazos de entrega, OTIF, eficiência de frotas e visões analíticas integradas.',
+      icon: '🚚',
+      tools: ['Power BI', 'Excel', 'SQL'],
+      images: [imgPedidos, financeiro],
+    },
+    {
+      id: 'rh',
+      title: 'Dashboard de RH',
+      description: 'Análise completa de dados de recursos humanos extraídos do banco de dados do cliente com insights operacionais.',
+      icon: '👥',
+      tools: ['SQL', 'Power BI'],
+      images: [imgDashRH, imgSqlRH],
     },
   ];
 
@@ -429,80 +458,142 @@ function Index() {
             </div>
           </div>
 
-          <div id="projetos" className="space-y-8 pt-8">
-            {/* SLIDER 1: DASHBOARD DE VENDAS */}
-            <div className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] p-8 rounded-[32px] border border-cyan-500/10 shadow-[0_30px_70px_rgba(6,182,212,0.15)] relative transition-all duration-300 hover:border-cyan-500/20 hover:shadow-[0_35px_90px_rgba(6,182,212,0.22)]">
-              <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
-              <h3 className="text-xl font-bold text-white tracking-tight">Dashboard de Metas e Vendas 📊</h3>
-              <p className="text-slate-300 text-sm mt-1 font-light">Análise macro de faturamento, metas comerciais e relacionamento estrutural do modelo de dados.</p>
-              
-              <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
-                <button 
-                  onClick={() => setVendasSlide(vendasSlide === 0 ? 1 : 0)}
-                  className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                  aria-label="Slide anterior"
-                >
-                  <FaChevronLeft />
-                </button>
-                <button 
-                  onClick={() => setVendasSlide(vendasSlide === 0 ? 1 : 0)}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                  aria-label="Próximo slide"
-                >
-                  <FaChevronRight />
-                </button>
-
-                <div 
-                  className="flex transition-transform duration-500 ease-in-out w-[200%] h-full"
-                  style={{ transform: `translateX(-${vendasSlide * 50}%)` }}
-                >
-                  <div className="w-1/2 h-full relative">
-                    <img src={imgVendas} alt="Dashboard de Vendas Principal" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-1/2 h-full relative">
-                    <img src={imgVendasRela} alt="Relatório de Vendas Detalhado" className="w-full h-full object-cover" />
+          <div id="projetos" className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8">
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                onClick={() => {
+                  setSelectedProject(project.id);
+                  setProjectSlide(0);
+                }}
+                className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] p-6 rounded-[24px] border border-cyan-500/10 shadow-[0_30px_70px_rgba(6,182,212,0.15)] relative transition-all duration-300 hover:border-cyan-500/20 hover:shadow-[0_35px_90px_rgba(6,182,212,0.22)] cursor-pointer group"
+              >
+                <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60 rounded-tl-[24px] rounded-bl-[24px]"></div>
+                
+                {/* Thumbnail Preview */}
+                <div className="relative overflow-hidden w-full rounded-lg border border-slate-800 bg-[#090f1c] aspect-video mb-4 group-hover:border-cyan-500/30 transition-colors">
+                  <img 
+                    src={project.images[0]} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <span className="text-white/80 group-hover:text-white text-sm font-semibold transition-colors">Clique para detalhes</span>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* SLIDER 2: DASHBOARD DE LOGÍSTICA / FINANCEIRO */}
-            <div className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] p-8 rounded-[32px] border border-cyan-500/10 shadow-[0_30px_70px_rgba(6,182,212,0.15)] relative transition-all duration-300 hover:border-cyan-500/20 hover:shadow-[0_35px_90px_rgba(6,182,212,0.22)]">
-              <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
-              <h3 className="text-xl font-bold text-white tracking-tight">Dashboard de Logística & Finanças 🚚</h3>
-              <p className="text-slate-300 text-sm mt-1 font-light">Controle fino de prazos de entrega, OTIF, eficiência de frotas e visões analíticas integradas.</p>
-              
-              <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
-                <button 
-                  onClick={() => setLogisticaSlide(logisticaSlide === 0 ? 1 : 0)}
-                  className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                  aria-label="Slide anterior"
-                >
-                  <FaChevronLeft />
-                </button>
-                <button 
-                  onClick={() => setLogisticaSlide(logisticaSlide === 0 ? 1 : 0)}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
-                  aria-label="Próximo slide"
-                >
-                  <FaChevronRight />
-                </button>
-
-                <div 
-                  className="flex transition-transform duration-500 ease-in-out w-[200%] h-full"
-                  style={{ transform: `translateX(-${logisticaSlide * 50}%)` }}
-                >
-                  <div className="w-1/2 h-full relative">
-                    <img src={imgPedidos} alt="Painel Logístico Geral" className="w-full h-full object-contain" />
-                  </div>
-                  <div className="w-1/2 h-full relative">
-                    {/* VARIÁVEL CORRIGIDA DE logoLogistica PARA financeiro */}
-                    <img src={financeiro} alt="Dashboard Financeiro" className="w-full h-full object-contain" />
-                  </div>
+                
+                <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+                  {project.title}
+                  <span className="text-xl">{project.icon}</span>
+                </h3>
+                
+                <p className="text-slate-400 text-sm mt-2 font-light mb-4">
+                  {project.description}
+                </p>
+                
+                <div className="flex flex-wrap gap-2">
+                  {project.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="px-3 py-1 rounded-full text-cyan-300 border border-cyan-500/30 bg-cyan-500/10 text-xs font-medium"
+                    >
+                      {tool}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </div>
+            ))}
           </div>
+
+          {/* MODAL DE PROJETO */}
+          {selectedProject && (
+            <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setSelectedProject(null)}>
+              <div 
+                className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] rounded-[32px] border border-cyan-500/20 shadow-[0_50px_100px_rgba(6,182,212,0.2)] max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-8">
+                  {/* Header com Botão de Fechar */}
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                      {projects.find(p => p.id === selectedProject)?.title}
+                    </h2>
+                    <button
+                      onClick={() => setSelectedProject(null)}
+                      className="text-slate-400 hover:text-cyan-400 transition-colors text-2xl"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {/* Slider de Imagens */}
+                  <div className="relative overflow-hidden w-full rounded-lg border border-slate-800 bg-[#090f1c] aspect-video mb-6">
+                    <button
+                      onClick={() => {
+                        const project = projects.find(p => p.id === selectedProject);
+                        setProjectSlide(projectSlide === 0 ? (project?.images.length || 2) - 1 : projectSlide - 1);
+                      }}
+                      className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
+                      aria-label="Slide anterior"
+                    >
+                      <FaChevronLeft />
+                    </button>
+                    <button
+                      onClick={() => {
+                        const project = projects.find(p => p.id === selectedProject);
+                        setProjectSlide(projectSlide === (project?.images.length || 2) - 1 ? 0 : projectSlide + 1);
+                      }}
+                      className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
+                      aria-label="Próximo slide"
+                    >
+                      <FaChevronRight />
+                    </button>
+
+                    <div className="w-full h-full">
+                      <img
+                        src={projects.find(p => p.id === selectedProject)?.images[projectSlide]}
+                        alt={`Slide ${projectSlide + 1}`}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+
+                    {/* Indicadores de Slide */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                      {projects.find(p => p.id === selectedProject)?.images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setProjectSlide(idx)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            idx === projectSlide
+                              ? 'bg-cyan-400 w-6'
+                              : 'bg-slate-500 hover:bg-slate-400'
+                          }`}
+                          aria-label={`Ir para slide ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Ferramentas Utilizadas */}
+                  <div className="rounded-[24px] border border-slate-900 bg-[#07101f] p-6">
+                    <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">
+                      Ferramentas Utilizadas
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      {projects.find(p => p.id === selectedProject)?.tools.map((tool) => (
+                        <span
+                          key={tool}
+                          className="px-4 py-2 rounded-lg text-cyan-300 border border-cyan-500/40 bg-cyan-500/15 text-sm font-medium hover:bg-cyan-500/25 transition-colors"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
         </div>
       </section>
