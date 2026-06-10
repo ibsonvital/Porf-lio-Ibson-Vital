@@ -176,6 +176,14 @@ function Index() {
       <section id="home" className="relative min-h-screen flex items-center justify-center px-6 text-center overflow-hidden hero-background">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
+        {/* FOTO DE FUNDO DO HERO - painél escuro com imagem em overlay */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <div className="w-[420px] h-[420px] md:w-[560px] md:h-[360px] rounded-3xl overflow-hidden bg-[#071028] shadow-2xl relative">
+            <img src={fotoIbson} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay" />
+            <div className="absolute inset-0 bg-[#071028] bg-opacity-85"></div>
+          </div>
+        </div>
+
         <div className="max-w-4xl mx-auto space-y-6 z-10 flex flex-col items-center" data-reveal>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight title-entrance" data-reveal>
             Transformando dados em <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_30px_rgba(34,211,238,0.3)]">decisões inteligentes</span>.
