@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaLightbulb, FaDatabase, FaBullseye, FaChartBar, FaCog, FaChartPie, FaComments, FaFileExcel, FaAward, FaLinkedin, FaGithub, FaBars, FaTimes, FaChevronDown, FaChevronLeft, FaChevronRight, FaArrowRight, FaCheckCircle, FaEnvelope, FaUserCircle } from 'react-icons/fa';
+import { FaLightbulb, FaDatabase, FaBullseye, FaChartBar, FaCog, FaChartPie, FaComments, FaFileExcel, FaAward, FaLinkedin, FaGithub, FaBars, FaTimes, FaChevronDown, FaChevronLeft, FaChevronRight, FaArrowRight, FaEnvelope, FaUserCircle, FaFilePdf } from 'react-icons/fa';
 
 // IMPORTAÇÃO ATUALIZADA (Voltando duas pastas a partir de src/pages/Index.tsx)
 import fotoIbson from '../../img/ibson.jpg';
@@ -8,15 +8,68 @@ import imgPedidos from '../../img/pedidos.png';
 import imgVendas from '../../img/vendas.png';
 import imgVendasRela from '../../img/vendasrela.png';
 import pdfCurriculo from '../../img/curriculo.pdf';
+import certAnaliseDados from '../../certificados/Certificado analise de dados.png';
+import certPowerSql from '../../certificados/Certificado Power bi + SQL.jpg';
+import certFundamentoDados from '../../certificados/Fundamento ciência de dados.png';
+import certWhiteBelt from '../../certificados/white belt.png';
+import certYellowBelt from '../../certificados/YELLOW BELT.jpg';
+import certExcelCopilot from '../../certificados/certificado fundamentos de excel e copilot com ia.pdf';
+import certPython from '../../certificados/certificado python.pdf';
 
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [photoError, setPhotoError] = useState(false);
+  const [selectedCertificate, setSelectedCertificate] = useState<{ title: string; subtitle: string; src: string; type: 'image' | 'pdf' } | null>(null);
   
   // Estados para controlar os slides dos dashboards
   const [vendasSlide, setVendasSlide] = useState(0);
   const [logisticaSlide, setLogisticaSlide] = useState(0);
+
+  const certificates = [
+    {
+      title: 'White Belt',
+      subtitle: 'Lean Six Sigma White Belt',
+      src: certWhiteBelt,
+      type: 'image' as const,
+    },
+    {
+      title: 'Yellow Belt',
+      subtitle: 'Lean Six Sigma Yellow Belt',
+      src: certYellowBelt,
+      type: 'image' as const,
+    },
+    {
+      title: 'Power BI + SQL',
+      subtitle: 'Certificado Power BI + SQL',
+      src: certPowerSql,
+      type: 'image' as const,
+    },
+    {
+      title: 'Análise de Dados',
+      subtitle: 'Certificado de Análise de Dados',
+      src: certAnaliseDados,
+      type: 'image' as const,
+    },
+    {
+      title: 'Fundamento Ciência de Dados',
+      subtitle: 'Certificado em Ciência de Dados',
+      src: certFundamentoDados,
+      type: 'image' as const,
+    },
+    {
+      title: 'Excel e Copilot com IA',
+      subtitle: 'Certificado Fundamentos de Excel + Copilot',
+      src: certExcelCopilot,
+      type: 'pdf' as const,
+    },
+    {
+      title: 'Python',
+      subtitle: 'Certificado Python',
+      src: certPython,
+      type: 'pdf' as const,
+    },
+  ];
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -28,7 +81,7 @@ function Index() {
   };
 
   useEffect(() => {
-    const sectionIds = ['home', 'sobre', 'estrategia', 'estudo-caso', 'projetos', 'habilidades', 'contato'];
+    const sectionIds = ['home', 'sobre', 'estrategia', 'estudo-caso', 'projetos', 'habilidades', 'certificacoes', 'contato'];
 
     const findSectionFromPoint = () => {
       const x = window.innerWidth / 2;
@@ -126,6 +179,7 @@ function Index() {
             { id: 'estudo-caso', label: 'Estudos de Caso' },
             { id: 'projetos', label: 'Projetos' },
             { id: 'habilidades', label: 'Habilidades' },
+            { id: 'certificacoes', label: 'Certificações' },
           ].map((item) => (
             <button
               key={item.id}
@@ -191,6 +245,7 @@ function Index() {
           <li><button onClick={() => { scrollToSection('estudo-caso'); setIsMenuOpen(false); }} className="hover:text-cyan-400">Estudos de Caso</button></li>
           <li><button onClick={() => { scrollToSection('projetos'); setIsMenuOpen(false); }} className="hover:text-cyan-400">Projetos</button></li>
           <li><button onClick={() => { scrollToSection('habilidades'); setIsMenuOpen(false); }} className="hover:text-cyan-400">Habilidades</button></li>
+          <li><button onClick={() => { scrollToSection('certificacoes'); setIsMenuOpen(false); }} className="hover:text-cyan-400">Certificações</button></li>
           <li><button onClick={() => { scrollToSection('contato'); setIsMenuOpen(false); }} className="text-cyan-400 font-bold">Contato</button></li>
         </ul>
       </div>
@@ -227,10 +282,15 @@ function Index() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-slate-500 text-xs gap-2 tracking-widest uppercase animate-pulse">
+        <button
+          type="button"
+          onClick={() => scrollToSection('sobre')}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-slate-500 text-xs gap-2 tracking-widest uppercase scroll-hint"
+          aria-label="Rolar para Sobre"
+        >
           <span>Scroll</span>
           <FaChevronDown className="text-cyan-500" />
-        </div>
+        </button>
       </section>
 
       {/* SEÇÃO SOBRE */}
@@ -256,9 +316,20 @@ function Index() {
               </h2>
             </div>
             <p className="text-slate-400 leading-relaxed font-light text-base md:text-lg">
-              Sou <strong className="text-slate-100 font-semibold">Ibson Vital</strong>, Analista de Dados focado em transformar dados em decisões estratégicas e ganho de eficiência operacional. Atuo com Power BI, Excel e automação de processos, criando soluções que reduzem tempo de análise, aumentam a confiabilidade das informações e apoiam diretamente a tomada de decisão. Tenho experiência prática com análise de dados no dia a dia e possuo certificações em Lean Six Sigma (White e Yellow Belt).
+              Sou <strong className="text-slate-100 font-semibold">Ibson Vital</strong>, Analista de Dados com experiência em Power BI, Excel e Power Query, atuando na construção de dashboards gerenciais, automação de processos e análise de indicadores. Possuo conhecimentos em SQL e Python para extração, tratamento e análise de dados, transformando informações em insights para apoio à tomada de decisão.
             </p>
-            
+
+            <div className="mt-6 rounded-[32px] border border-slate-800 bg-[#07101f] p-6 shadow-[0_30px_60px_rgba(0,0,0,0.22)]">
+              <p className="text-cyan-400 uppercase tracking-[0.35em] text-[11px] font-semibold mb-4">Stack Tecnológica</p>
+              <div className="flex flex-wrap gap-3">
+                {['Power BI', 'SQL', 'Excel', 'Power Query', 'Python'].map((tech) => (
+                  <span key={tech} className="rounded-full border border-slate-700 bg-[#071a2a] px-4 py-2 text-xs font-medium text-slate-300">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
             <div className="pt-2">
               <a 
                 href={pdfCurriculo} 
@@ -327,29 +398,43 @@ function Index() {
           </div>
 
           {/* Estudo de Caso */}
-          <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] p-8 rounded-[32px] border border-cyan-500/10 shadow-[0_30px_70px_rgba(6,182,212,0.15)] relative overflow-hidden group transition-all duration-300 hover:border-cyan-500/20 hover:shadow-[0_35px_90px_rgba(6,182,212,0.22)]">
             <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500 shadow-[0_0_10px_#06b6d4]"></div>
-            <h3 className="text-xl font-bold text-slate-100 mb-4 flex items-center tracking-tight">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center tracking-tight">
               Estudo de Caso: Automação e Otimização de Processos <span className="ml-2 text-sm opacity-80">📝</span>
             </h3>
             <p className="text-slate-400 mb-6 text-sm md:text-base leading-relaxed font-light">
               Este projeto demonstra a aplicação prática de Business Intelligence e automação para resolver um gargalo crítico no monitoramento de indicadores.
             </p>
-            <ul className="grid gap-4 text-sm text-slate-300">
-              <li className="bg-[#090f1c] p-3 rounded border border-slate-900"><strong className="text-cyan-400 font-medium">Problema:</strong> O monitoramento de indicadores era manual, baseado em planilhas, consumindo cerca de 30 minutos de trabalho por ciclo de análise.</li>
-              <li className="bg-[#090f1c] p-3 rounded border border-slate-900"><strong className="text-cyan-400 font-medium">Solução:</strong> Desenvolvimento de dashboards dinâmicos no Power BI, substituindo controles manuais e automatizando todo o fluxo de dados com Power Query.</li>
-              <li className="flex items-center text-emerald-400 font-medium pl-2"><FaCheckCircle className="mr-2 text-xs" /> Redução de 97% no Tempo de Análise (de ~30 minutos para segundos).</li>
-              <li className="flex items-center text-emerald-400 font-medium pl-2"><FaCheckCircle className="mr-2 text-xs" /> Aumento significativo na agilidade, precisão e confiabilidade das informações.</li>
-              <li className="flex items-center text-emerald-400 font-medium pl-2"><FaCheckCircle className="mr-2 text-xs" /> Criação de solução automatizada para monitoramento de prazos e dias úteis.</li>
-            </ul>
+            <div className="rounded-[32px] border border-slate-900 bg-[#07101f] p-6 space-y-5">
+              <div>
+                <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">Ferramentas utilizadas</p>
+                <ul className="grid gap-2 text-slate-300 text-sm">
+                  {['Power BI', 'Excel', 'SQL'].map((tech) => (
+                    <li key={tech} className="flex items-center gap-2">
+                      <span className="inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400" />
+                      {tech}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">Objetivo</p>
+                <p className="text-slate-300 text-sm">Monitorar entregas e atrasos logísticos para entregar visibilidade em tempo real e apoiar decisões de operação.</p>
+              </div>
+              <div>
+                <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">Resultado</p>
+                <p className="text-slate-300 text-sm">Redução de 97% no tempo de análise, transformando um dashboard em um caso de negócio.</p>
+              </div>
+            </div>
           </div>
 
           <div id="projetos" className="space-y-8 pt-8">
             {/* SLIDER 1: DASHBOARD DE VENDAS */}
-            <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative">
+            <div className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] p-8 rounded-[32px] border border-cyan-500/10 shadow-[0_30px_70px_rgba(6,182,212,0.15)] relative transition-all duration-300 hover:border-cyan-500/20 hover:shadow-[0_35px_90px_rgba(6,182,212,0.22)]">
               <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
-              <h3 className="text-xl font-bold text-slate-100 tracking-tight">Dashboard de Metas e Vendas 📊</h3>
-              <p className="text-slate-400 text-sm mt-1 font-light">Análise macro de faturamento, metas comerciais e relacionamento estrutural do modelo de dados.</p>
+              <h3 className="text-xl font-bold text-white tracking-tight">Dashboard de Metas e Vendas 📊</h3>
+              <p className="text-slate-300 text-sm mt-1 font-light">Análise macro de faturamento, metas comerciais e relacionamento estrutural do modelo de dados.</p>
               
               <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
                 <button 
@@ -382,10 +467,10 @@ function Index() {
             </div>
 
             {/* SLIDER 2: DASHBOARD DE LOGÍSTICA / FINANCEIRO */}
-            <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative">
+            <div className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] p-8 rounded-[32px] border border-cyan-500/10 shadow-[0_30px_70px_rgba(6,182,212,0.15)] relative transition-all duration-300 hover:border-cyan-500/20 hover:shadow-[0_35px_90px_rgba(6,182,212,0.22)]">
               <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500/60"></div>
-              <h3 className="text-xl font-bold text-slate-100 tracking-tight">Dashboard de Logística & Finanças 🚚</h3>
-              <p className="text-slate-400 text-sm mt-1 font-light">Controle fino de prazos de entrega, OTIF, eficiência de frotas e visões analíticas integradas.</p>
+              <h3 className="text-xl font-bold text-white tracking-tight">Dashboard de Logística & Finanças 🚚</h3>
+              <p className="text-slate-300 text-sm mt-1 font-light">Controle fino de prazos de entrega, OTIF, eficiência de frotas e visões analíticas integradas.</p>
               
               <div className="relative overflow-hidden w-full mt-6 rounded-lg border border-slate-800 bg-[#090f1c] aspect-video">
                 <button 
@@ -477,6 +562,40 @@ function Index() {
         </div>
       </section>
 
+      {/* SEÇÃO CERTIFICAÇÕES */}
+      <section id="certificacoes" className="py-28 bg-[#090f1c] border-t border-slate-900" data-reveal>
+        <div className="max-w-6xl mx-auto px-6 space-y-12">
+          <div className="text-center space-y-3">
+            <span className="text-cyan-500 font-mono text-xs tracking-widest uppercase">// Certificações</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Certificados Profissionais</h2>
+            <p className="max-w-2xl mx-auto text-slate-400 text-sm md:text-base leading-relaxed">
+              Clique em qualquer certificado para ver a imagem completa do documento e comprovar suas conquistas.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {certificates.map((certificate) => (
+              <button
+                key={certificate.title}
+                onClick={() => setSelectedCertificate(certificate)}
+                className="group text-left rounded-[32px] border border-slate-800 bg-[#070b12] p-6 transition-all duration-300 hover:border-cyan-500/30 hover:-translate-y-1 hover:bg-[#08101f]"
+              >
+                <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-cyan-500/10 text-cyan-300 mb-5 transition-all duration-300 group-hover:bg-cyan-500/15">
+                  {certificate.type === 'pdf' ? <FaFilePdf className="text-xl" /> : <FaAward className="text-xl" />}
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">{certificate.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{certificate.subtitle}</p>
+                {certificate.type === 'pdf' && (
+                  <span className="mt-4 inline-flex items-center rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
+                    Abrir PDF
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SEÇÃO CONTATO */}
       <section id="contato" className="py-28 bg-[#070b12] border-t border-slate-900" data-reveal>
         <div className="max-w-6xl mx-auto px-6 grid gap-10 lg:grid-cols-[1.2fr_1fr] items-stretch">
@@ -539,6 +658,48 @@ function Index() {
       <a href="#contato" className="fab-contact" title="Contato rápido">
         <FaEnvelope className="text-[#021022]" />
       </a>
+      {selectedCertificate && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4 py-6">
+          <div className="relative max-w-5xl w-full rounded-[28px] bg-[#07101f] border border-cyan-500/20 shadow-[0_35px_120px_rgba(0,0,0,0.65)] overflow-hidden">
+            <button
+              onClick={() => setSelectedCertificate(null)}
+              className="absolute top-4 right-4 z-10 rounded-full bg-slate-900/90 p-3 text-slate-100 transition hover:bg-cyan-500 hover:text-[#070b12]"
+              aria-label="Fechar certificado"
+            >
+              <FaTimes />
+            </button>
+            <div className="p-8 text-center">
+              <h3 className="text-2xl font-bold text-white mb-2">{selectedCertificate.title}</h3>
+              <p className="text-slate-400 mb-6">{selectedCertificate.subtitle}</p>
+            </div>
+            <div className="max-h-[80vh] overflow-hidden bg-[#070b12]">
+              {selectedCertificate.type === 'image' ? (
+                <img
+                  src={selectedCertificate.src}
+                  alt={selectedCertificate.title}
+                  className="mx-auto max-h-[80vh] max-w-full object-contain"
+                />
+              ) : (
+                <object
+                  data={selectedCertificate.src}
+                  type="application/pdf"
+                  className="h-[80vh] w-full"
+                >
+                  <div className="flex h-[80vh] w-full items-center justify-center bg-slate-900 text-slate-300 px-6 text-center">
+                    <p>
+                      Não foi possível visualizar o PDF no navegador.{' '}
+                      <a href={selectedCertificate.src} target="_blank" rel="noreferrer" className="text-cyan-400 underline">
+                        Abrir em nova aba
+                      </a>
+                    </p>
+                  </div>
+                </object>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer className="bg-[#070b12] py-12 border-t border-slate-900 text-center">
         <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <p className="text-xs text-slate-600">© 2026 Ibson Vital. Built with React & Tailwind CSS.</p>
