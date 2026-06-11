@@ -341,7 +341,7 @@ function Index() {
             <div className="space-y-2">
               <span className="text-cyan-500 font-mono text-xs tracking-widest uppercase">// Perfil Profissional</span>
               <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-                Engenharia de Dados & Estratégia de Negócios
+                Análise de Dados & Estratégia de Negócios
               </h2>
             </div>
             <p className="text-slate-400 leading-relaxed font-light text-base md:text-lg">
