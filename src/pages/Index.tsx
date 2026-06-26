@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaLightbulb, FaDatabase, FaBullseye, FaChartBar, FaCog, FaChartPie, FaComments, FaFileExcel, FaAward, FaLinkedin, FaGithub, FaBars, FaTimes, FaChevronDown, FaChevronLeft, FaChevronRight, FaArrowRight, FaEnvelope, FaUserCircle, FaFilePdf } from 'react-icons/fa';
+import { FaLightbulb, FaDatabase, FaBullseye, FaChartBar, FaCog, FaChartPie, FaComments, FaFileExcel, FaAward, FaLinkedin, FaGithub, FaBars, FaTimes, FaChevronDown, FaChevronLeft, FaChevronRight, FaArrowRight, FaCheckCircle, FaEnvelope, FaUserCircle, FaFilePdf } from 'react-icons/fa';
 
 // IMPORTAÇÃO ATUALIZADA (Voltando duas pastas a partir de src/pages/Index.tsx)
 import fotoIbson from '../../img/ibson.jpg';
@@ -429,33 +429,40 @@ function Index() {
           {/* Estudo de Caso */}
           <div className="bg-gradient-to-br from-[#07101f] via-[#081228] to-[#0b1624] p-8 rounded-[32px] border border-cyan-500/10 shadow-[0_30px_70px_rgba(6,182,212,0.15)] relative overflow-hidden group transition-all duration-300 hover:border-cyan-500/20 hover:shadow-[0_35px_90px_rgba(6,182,212,0.22)]">
             <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500 shadow-[0_0_10px_#06b6d4]"></div>
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center tracking-tight">
-              Estudo de Caso: Automação e Otimização de Processos <span className="ml-2 text-sm opacity-80">📝</span>
+            <h3 className="text-xl font-bold text-white mb-4 tracking-tight">
+              Estudo de Caso: Automação e Otimização de Processos
             </h3>
             <p className="text-slate-400 mb-6 text-sm md:text-base leading-relaxed font-light">
-              Este projeto demonstra a aplicação prática de Business Intelligence e automação para resolver um gargalo crítico no monitoramento de indicadores.
+              Resumo de um projeto em que um controle manual de indicadores foi transformado em um processo automatizado,
+              mais rápido e mais confiável para apoiar a tomada de decisão.
             </p>
-            <div className="rounded-[32px] border border-slate-900 bg-[#07101f] p-6 space-y-5">
-              <div>
-                <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">Ferramentas utilizadas</p>
-                <ul className="grid gap-2 text-slate-300 text-sm">
-                  {['Power BI', 'Excel', 'SQL'].map((tech) => (
-                    <li key={tech} className="flex items-center gap-2">
-                      <span className="inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400" />
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">Objetivo</p>
-                <p className="text-slate-300 text-sm">Monitorar entregas e atrasos logísticos para entregar visibilidade em tempo real e apoiar decisões de operação.</p>
-              </div>
-              <div>
-                <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">Resultado</p>
-                <p className="text-slate-300 text-sm">Redução de 97% no tempo de análise, transformando um dashboard em um caso de negócio.</p>
-              </div>
-            </div>
+            <ul className="grid gap-4 text-sm text-slate-300">
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed">
+                <strong className="text-cyan-400 font-medium">Contexto:</strong> A equipe precisava acompanhar indicadores,
+                prazos e dias úteis com frequência, mas dependia de planilhas e atualizações manuais.
+              </li>
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed">
+                <strong className="text-cyan-400 font-medium">Problema:</strong> Cada ciclo de análise levava cerca de 30
+                minutos, aumentando o risco de erro, atraso nas informações e retrabalho.
+              </li>
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed">
+                <strong className="text-cyan-400 font-medium">Solução:</strong> Criei um fluxo automatizado com Power Query
+                e dashboards no Power BI, substituindo o controle manual por uma visão atualizada e padronizada dos dados.
+              </li>
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed">
+                <strong className="text-cyan-400 font-medium">Resultado:</strong> O tempo de análise caiu de aproximadamente
+                30 minutos para poucos segundos, com ganho de agilidade, precisão e confiabilidade nas informações.
+              </li>
+              <li className="flex items-start text-emerald-400 font-medium pl-1">
+                <FaCheckCircle className="mr-2 mt-1 shrink-0 text-xs" /> Redução de 97% no tempo de análise.
+              </li>
+              <li className="flex items-start text-emerald-400 font-medium pl-1">
+                <FaCheckCircle className="mr-2 mt-1 shrink-0 text-xs" /> Monitoramento automatizado de prazos, indicadores e dias úteis.
+              </li>
+              <li className="flex items-start text-emerald-400 font-medium pl-1">
+                <FaCheckCircle className="mr-2 mt-1 shrink-0 text-xs" /> Menos retrabalho e mais clareza para decisões operacionais.
+              </li>
+            </ul>
           </div>
 
           <div id="projetos" className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8">

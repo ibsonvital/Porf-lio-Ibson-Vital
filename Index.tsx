@@ -301,18 +301,21 @@ function Index() {
           {/* Estudo de Caso */}
           <div className="bg-[#070b12] p-8 rounded-xl border border-slate-900 shadow-xl relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-[4px] h-full bg-cyan-500 shadow-[0_0_10px_#06b6d4]"></div>
-            <h3 className="text-xl font-bold text-slate-100 mb-4 flex items-center tracking-tight">
-              Estudo de Caso: Automação e Otimização de Processos <span className="ml-2 text-sm opacity-80">📝</span>
+            <h3 className="text-xl font-bold text-slate-100 mb-4 tracking-tight">
+              Estudo de Caso: Automação e Otimização de Processos
             </h3>
             <p className="text-slate-400 mb-6 text-sm md:text-base leading-relaxed font-light">
-              Este projeto demonstra a aplicação prática de Business Intelligence e automação para resolver um gargalo crítico no monitoramento de indicadores.
+              Resumo de um projeto em que um controle manual de indicadores foi transformado em um processo automatizado,
+              mais rápido e mais confiável para apoiar a tomada de decisão.
             </p>
             <ul className="grid gap-4 text-sm text-slate-300">
-              <li className="bg-[#090f1c] p-3 rounded border border-slate-900"><strong className="text-cyan-400 font-medium">Problema:</strong> O monitoramento de indicadores era manual, baseado em planilhas, consumindo cerca de 30 minutos de trabalho por ciclo de análise.</li>
-              <li className="bg-[#090f1c] p-3 rounded border border-slate-900"><strong className="text-cyan-400 font-medium">Solução:</strong> Desenvolvimento de dashboards dinâmicos no Power BI, substituindo controles manuais e automatizando todo o fluxo de dados com Power Query.</li>
-              <li className="flex items-center text-emerald-400 font-medium pl-2"><FaCheckCircle className="mr-2 text-xs" /> Redução de 97% no Tempo de Análise (de ~30 minutos para segundos).</li>
-              <li className="flex items-center text-emerald-400 font-medium pl-2"><FaCheckCircle className="mr-2 text-xs" /> Aumento significativo na agilidade, precisão e confiabilidade das informações.</li>
-              <li className="flex items-center text-emerald-400 font-medium pl-2"><FaCheckCircle className="mr-2 text-xs" /> Criação de solução automatizada para monitoramento de prazos e dias úteis.</li>
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed"><strong className="text-cyan-400 font-medium">Contexto:</strong> A equipe precisava acompanhar indicadores, prazos e dias úteis com frequência, mas dependia de planilhas e atualizações manuais.</li>
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed"><strong className="text-cyan-400 font-medium">Problema:</strong> Cada ciclo de análise levava cerca de 30 minutos, aumentando o risco de erro, atraso nas informações e retrabalho.</li>
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed"><strong className="text-cyan-400 font-medium">Solução:</strong> Criei um fluxo automatizado com Power Query e dashboards no Power BI, substituindo o controle manual por uma visão atualizada e padronizada dos dados.</li>
+              <li className="bg-[#090f1c] p-4 rounded-lg border border-slate-900 leading-relaxed"><strong className="text-cyan-400 font-medium">Resultado:</strong> O tempo de análise caiu de aproximadamente 30 minutos para poucos segundos, com ganho de agilidade, precisão e confiabilidade nas informações.</li>
+              <li className="flex items-start text-emerald-400 font-medium pl-1"><FaCheckCircle className="mr-2 mt-1 shrink-0 text-xs" /> Redução de 97% no tempo de análise.</li>
+              <li className="flex items-start text-emerald-400 font-medium pl-1"><FaCheckCircle className="mr-2 mt-1 shrink-0 text-xs" /> Monitoramento automatizado de prazos, indicadores e dias úteis.</li>
+              <li className="flex items-start text-emerald-400 font-medium pl-1"><FaCheckCircle className="mr-2 mt-1 shrink-0 text-xs" /> Menos retrabalho e mais clareza para decisões operacionais.</li>
             </ul>
           </div>
 
