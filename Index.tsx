@@ -7,7 +7,6 @@ import financeiro from '../../img/financeiro.png';
 import imgPedidos from '../../img/pedidos.png';
 import imgVendas from '../../img/vendas.png';
 import imgVendasRela from '../../img/vendasrela.png';
-import pdfCurriculo from '../../img/curriculo.pdf';
 
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
@@ -230,17 +229,6 @@ function Index() {
             <p className="text-slate-400 leading-relaxed font-light text-base md:text-lg">
               Sou <strong className="text-slate-100 font-semibold">Ibson Vital</strong>, Analista de Dados focado em transformar dados em decisões estratégicas e ganho de eficiência operacional. Atuo com Power BI, Excel e automação de processos, criando soluções que reduzem tempo de análise, aumentam a confiabilidade das informações e apoiam diretamente a tomada de decisão. Tenho experiência prática com análise de dados no dia a dia e possuo certificações em Lean Six Sigma (White e Yellow Belt).
             </p>
-            
-            <div className="pt-2">
-              <a 
-                href={pdfCurriculo} 
-                target="_blank" 
-                rel="noreferrer"
-                className="inline-flex items-center bg-slate-900 border border-slate-800 hover:border-cyan-500/50 text-slate-300 hover:text-cyan-400 font-semibold px-6 py-3 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-              >
-                <FaFileExcel className="mr-2.5 text-cyan-500" /> Baixar CV Completo (PDF)
-              </a>
-            </div>
           </div>
 
           <div className="w-full lg:w-56 bg-[#070b12]/60 p-6 rounded-xl border border-slate-800/80 backdrop-blur-sm shadow-xl flex flex-col gap-6 text-center">

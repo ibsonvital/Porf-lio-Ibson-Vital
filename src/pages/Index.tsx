@@ -9,7 +9,6 @@ import imgVendas from '../../img/vendas.png';
 import imgVendasRela from '../../img/vendasrela.png';
 import imgDashRH from '../../img/DASHRH.png';
 import imgSqlRH from '../../img/SQLRH.png';
-import pdfCurriculo from '../../img/curriculo.pdf';
 import certAnaliseDados from '../../certificados/Certificado analise de dados.png';
 import certPowerSql from '../../certificados/Certificado Power bi + SQL.jpg';
 import certFundamentoDados from '../../certificados/Fundamento ciência de dados.png';
@@ -357,17 +356,6 @@ function Index() {
                   </span>
                 ))}
               </div>
-            </div>
-
-            <div className="pt-2">
-              <a 
-                href={pdfCurriculo} 
-                target="_blank" 
-                rel="noreferrer"
-                className="inline-flex items-center bg-slate-900 border border-slate-800 hover:border-cyan-500/50 text-slate-300 hover:text-cyan-400 font-semibold px-6 py-3 rounded-md transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-              >
-                <FaFileExcel className="mr-2.5 text-cyan-500" /> Baixar CV Completo (PDF)
-              </a>
             </div>
           </div>
 
