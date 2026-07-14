@@ -16,6 +16,7 @@ import certWhiteBelt from '../../certificados/white belt.png';
 import certYellowBelt from '../../certificados/YELLOW BELT.jpg';
 import certExcelCopilot from '../../certificados/certificado fundamentos de excel e copilot com ia.pdf';
 import certPython from '../../certificados/certificado python.pdf';
+import certPythonJornada from '../../certificados/Certificado Python Jornada.pdf';
 
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
@@ -68,6 +69,12 @@ function Index() {
       title: 'Python',
       subtitle: 'Certificado Python',
       src: certPython,
+      type: 'pdf' as const,
+    },
+    {
+      title: 'Python Jornada',
+      subtitle: 'Certificado Python Jornada',
+      src: certPythonJornada,
       type: 'pdf' as const,
     },
   ];
