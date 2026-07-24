@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FaLightbulb, FaDatabase, FaBullseye, FaChartBar, FaCog, FaChartPie, FaComments, FaFileExcel, FaAward, FaLinkedin, FaGithub, FaBars, FaTimes, FaChevronDown, FaChevronLeft, FaChevronRight, FaArrowRight, FaCheckCircle, FaEnvelope, FaUserCircle, FaFilePdf } from 'react-icons/fa';
+import { FaLightbulb, FaDatabase, FaBullseye, FaChartBar, FaCog, FaChartPie, FaComments, FaFileExcel, FaAward, FaLinkedin, FaGithub, FaBars, FaTimes, FaChevronDown, FaChevronLeft, FaChevronRight, FaArrowRight, FaCheckCircle, FaEnvelope, FaUserCircle, FaFilePdf, FaWhatsapp } from 'react-icons/fa';
 
 // IMPORTAÇÃO ATUALIZADA (Voltando duas pastas a partir de src/pages/Index.tsx)
 import fotoIbson from '../../img/ibson.jpg';
@@ -18,6 +18,10 @@ import certExcelCopilot from '../../certificados/certificado fundamentos de exce
 import certPython from '../../certificados/certificado python.pdf';
 import certPythonJornada from '../../certificados/Certificado Python Jornada.pdf';
 
+const whatsappNumber = '5521970946410';
+const whatsappDisplay = '(21) 97094-6410';
+const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Olá, Ibson. Vi seu portfólio e gostaria de conversar sobre dados, dashboards ou automação.')}`;
+
 function Index() {
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,51 +36,65 @@ function Index() {
     {
       title: 'White Belt',
       subtitle: 'Lean Six Sigma White Belt',
+      category: 'Processos',
       src: certWhiteBelt,
       type: 'image' as const,
     },
     {
       title: 'Yellow Belt',
       subtitle: 'Lean Six Sigma Yellow Belt',
+      category: 'Processos',
       src: certYellowBelt,
       type: 'image' as const,
     },
     {
       title: 'Power BI + SQL',
       subtitle: 'Certificado Power BI + SQL',
+      category: 'Dados e BI',
       src: certPowerSql,
       type: 'image' as const,
     },
     {
       title: 'Análise de Dados',
       subtitle: 'Certificado de Análise de Dados',
+      category: 'Dados e BI',
       src: certAnaliseDados,
       type: 'image' as const,
     },
     {
       title: 'Fundamento Ciência de Dados',
       subtitle: 'Certificado em Ciência de Dados',
+      category: 'Dados e BI',
       src: certFundamentoDados,
       type: 'image' as const,
     },
     {
       title: 'Excel e Copilot com IA',
       subtitle: 'Certificado Fundamentos de Excel + Copilot',
+      category: 'Dados e BI',
       src: certExcelCopilot,
       type: 'pdf' as const,
     },
     {
       title: 'Python',
       subtitle: 'Certificado Python',
+      category: 'Python e SQL',
       src: certPython,
       type: 'pdf' as const,
     },
     {
       title: 'Python Jornada',
       subtitle: 'Certificado Python Jornada',
+      category: 'Python e SQL',
       src: certPythonJornada,
       type: 'pdf' as const,
     },
+  ];
+
+  const certificateGroups = [
+    { title: 'Dados e BI', items: certificates.filter((certificate) => certificate.category === 'Dados e BI') },
+    { title: 'Python e SQL', items: certificates.filter((certificate) => certificate.category === 'Python e SQL') },
+    { title: 'Processos', items: certificates.filter((certificate) => certificate.category === 'Processos') },
   ];
 
   const projects = [
@@ -87,6 +105,10 @@ function Index() {
       icon: '📊',
       tools: ['Power BI', 'Excel', 'SQL'],
       images: [imgVendas, imgVendasRela],
+      challenge: 'Consolidar a visão de metas, vendas e desempenho comercial em um painel único para acompanhamento gerencial.',
+      data: 'Bases comerciais, metas por período, relacionamento do modelo e indicadores de faturamento.',
+      metrics: ['Faturamento', 'Meta x realizado', 'Performance comercial', 'Relacionamento do modelo de dados'],
+      impact: 'Leitura mais rápida dos resultados comerciais e apoio direto na priorização de ações de venda.',
     },
     {
       id: 'logistica',
@@ -95,6 +117,10 @@ function Index() {
       icon: '🚚',
       tools: ['Power BI', 'Excel', 'SQL'],
       images: [imgPedidos, financeiro],
+      challenge: 'Acompanhar atrasos, prazos e indicadores financeiros sem depender de verificações manuais em planilhas.',
+      data: 'Pedidos, entregas, prazos, indicadores logísticos e visão financeira operacional.',
+      metrics: ['OTIF', 'Atrasos', 'Prazos de entrega', 'Eficiência operacional'],
+      impact: 'Mais clareza sobre gargalos logísticos e maior velocidade para agir antes que atrasos virem problema recorrente.',
     },
     {
       id: 'rh',
@@ -103,8 +129,14 @@ function Index() {
       icon: '👥',
       tools: ['SQL', 'Power BI'],
       images: [imgDashRH, imgSqlRH],
+      challenge: 'Transformar dados de RH extraídos via SQL em indicadores claros para análise de quadro, perfil e movimentações.',
+      data: 'Banco de dados de RH, consultas SQL, tabelas tratadas e painel analítico no Power BI.',
+      metrics: ['Headcount', 'Distribuição por área', 'Perfil de colaboradores', 'Indicadores operacionais de RH'],
+      impact: 'Visão estruturada dos dados de pessoas para apoiar decisões de gestão e acompanhamento da operação.',
     },
   ];
+
+  const selectedProjectData = projects.find((project) => project.id === selectedProject);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -252,6 +284,15 @@ function Index() {
             >
               <FaGithub className="text-base" />
             </a>
+            <a 
+              href={whatsappLink}
+              target="_blank" 
+              rel="noreferrer" 
+              className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 text-cyan-400 flex items-center justify-center transition-all hover:border-cyan-500 hover:text-cyan-300 hover:shadow-[0_0_10px_rgba(6,182,212,0.4)]"
+              title="WhatsApp"
+            >
+              <FaWhatsapp className="text-base" />
+            </a>
           </div>
           
           <button 
@@ -282,6 +323,7 @@ function Index() {
           <li><button onClick={() => { scrollToSection('habilidades'); setIsMenuOpen(false); }} className="hover:text-cyan-400">Habilidades</button></li>
           <li><button onClick={() => { scrollToSection('certificacoes'); setIsMenuOpen(false); }} className="hover:text-cyan-400">Certificações</button></li>
           <li><button onClick={() => { scrollToSection('contato'); setIsMenuOpen(false); }} className="text-cyan-400 font-bold">Contato</button></li>
+          <li><a href={whatsappLink} target="_blank" rel="noreferrer" className="text-emerald-400 font-bold">WhatsApp</a></li>
         </ul>
       </div>
 
@@ -291,11 +333,18 @@ function Index() {
 
         <div className="max-w-4xl mx-auto space-y-6 z-10 flex flex-col items-center" data-reveal>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-tight title-entrance" data-reveal>
-            Transformando dados em <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_30px_rgba(34,211,238,0.3)]">decisões inteligentes</span>.
+            Analista de Dados para <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 drop-shadow-[0_0_30px_rgba(34,211,238,0.3)]">decisões mais rápidas</span>.
           </h1>
           <p className="text-lg sm:text-xl text-slate-400 max-w-2xl font-light tracking-wide">
-            Análise Avançada, Estratégia de BI e Automação de Processos de ponta a ponta.
+            Dashboards em Power BI, SQL e automações que reduzem retrabalho, organizam indicadores e entregam clareza para a operação.
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-300">
+            {['Power BI', 'SQL', 'Excel', 'Power Query', 'Python', 'Automação'].map((item) => (
+              <span key={item} className="rounded-full border border-cyan-500/20 bg-slate-950/50 px-3 py-1.5">
+                {item}
+              </span>
+            ))}
+          </div>
           
           <div className="pt-4 flex flex-col sm:flex-row items-center gap-4">
             <div className="relative">
@@ -306,14 +355,22 @@ function Index() {
                 Ver Projetos
                 <FaArrowRight className="ml-2 text-xs transition-transform group-hover:translate-x-1" />
               </button>
-              <span className="cta-badge">Novo</span>
+              <span className="cta-badge">Impacto</span>
             </div>
             <button 
-              onClick={() => scrollToSection('sobre')}
+              onClick={() => scrollToSection('contato')}
               className="bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:border-slate-700 font-semibold px-8 py-3.5 rounded-md transition-all"
             >
-              Conhecer Trajetória
+              Falar Comigo
             </button>
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center bg-emerald-500 hover:bg-emerald-400 text-[#07110b] font-bold px-8 py-3.5 rounded-md transition-all hover:-translate-y-0.5"
+            >
+              <FaWhatsapp className="mr-2" /> WhatsApp
+            </a>
           </div>
         </div>
 
@@ -351,7 +408,7 @@ function Index() {
               </h2>
             </div>
             <p className="text-slate-400 leading-relaxed font-light text-base md:text-lg">
-              Sou <strong className="text-slate-100 font-semibold">Ibson Vital</strong>, Analista de Dados com experiência em Power BI, Excel e Power Query, atuando na construção de dashboards gerenciais, automação de processos e análise de indicadores. Possuo conhecimentos em SQL e Python para extração, tratamento e análise de dados, transformando informações em insights para apoio à tomada de decisão.
+              Sou <strong className="text-slate-100 font-semibold">Ibson Vital</strong>, Analista de Dados focado em transformar bases dispersas em dashboards, automações e indicadores acionáveis. Atuo com Power BI, SQL, Excel, Power Query e Python para reduzir retrabalho, melhorar a confiabilidade das informações e acelerar decisões operacionais.
             </p>
 
             <div className="mt-6 rounded-[32px] border border-slate-800 bg-[#07101f] p-6 shadow-[0_30px_60px_rgba(0,0,0,0.22)]">
@@ -370,7 +427,8 @@ function Index() {
             {[
               { val: "+3", label: "Projetos de Dados Aplicados" },
               { val: "+4", label: "Processos Automatizados" },
-              { val: "97%", label: "Redução no Tempo de Análise" }
+              { val: "97%", label: "Redução no Tempo de Análise" },
+              { val: "BI", label: "Dashboards para Gestão" }
             ].map((kpi, i) => (
               <div key={i} className="group border-b border-slate-900 last:border-0 pb-4 last:pb-0">
                 <span className="block text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400 transition-transform duration-300 group-hover:scale-105">
@@ -518,7 +576,7 @@ function Index() {
                   {/* Header com Botão de Fechar */}
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-                      {projects.find(p => p.id === selectedProject)?.title}
+                      {selectedProjectData?.title}
                     </h2>
                     <button
                       onClick={() => setSelectedProject(null)}
@@ -532,8 +590,7 @@ function Index() {
                   <div className="relative overflow-hidden w-full rounded-lg border border-slate-800 bg-[#090f1c] aspect-video mb-6">
                     <button
                       onClick={() => {
-                        const project = projects.find(p => p.id === selectedProject);
-                        setProjectSlide(projectSlide === 0 ? (project?.images.length || 2) - 1 : projectSlide - 1);
+                        setProjectSlide(projectSlide === 0 ? (selectedProjectData?.images.length || 2) - 1 : projectSlide - 1);
                       }}
                       className="absolute top-1/2 left-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
                       aria-label="Slide anterior"
@@ -542,8 +599,7 @@ function Index() {
                     </button>
                     <button
                       onClick={() => {
-                        const project = projects.find(p => p.id === selectedProject);
-                        setProjectSlide(projectSlide === (project?.images.length || 2) - 1 ? 0 : projectSlide + 1);
+                        setProjectSlide(projectSlide === (selectedProjectData?.images.length || 2) - 1 ? 0 : projectSlide + 1);
                       }}
                       className="absolute top-1/2 right-4 -translate-y-1/2 bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/90 hover:text-slate-900 w-10 h-10 rounded-full flex items-center justify-center z-20 transition-all shadow-[0_0_18px_rgba(6,182,212,0.25)]"
                       aria-label="Próximo slide"
@@ -553,7 +609,7 @@ function Index() {
 
                     <div className="w-full h-full">
                       <img
-                        src={projects.find(p => p.id === selectedProject)?.images[projectSlide]}
+                        src={selectedProjectData?.images[projectSlide]}
                         alt={`Slide ${projectSlide + 1}`}
                         className="w-full h-full object-contain"
                       />
@@ -561,7 +617,7 @@ function Index() {
 
                     {/* Indicadores de Slide */}
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                      {projects.find(p => p.id === selectedProject)?.images.map((_, idx) => (
+                      {selectedProjectData?.images.map((_, idx) => (
                         <button
                           key={idx}
                           onClick={() => setProjectSlide(idx)}
@@ -576,13 +632,47 @@ function Index() {
                     </div>
                   </div>
 
+                  <div className="grid gap-4 md:grid-cols-2 mb-6">
+                    <div className="rounded-[24px] border border-slate-900 bg-[#07101f] p-5">
+                      <p className="text-cyan-400 uppercase tracking-[0.28em] text-[10px] font-semibold mb-3">
+                        Problema
+                      </p>
+                      <p className="text-sm text-slate-300 leading-relaxed">{selectedProjectData?.challenge}</p>
+                    </div>
+                    <div className="rounded-[24px] border border-slate-900 bg-[#07101f] p-5">
+                      <p className="text-cyan-400 uppercase tracking-[0.28em] text-[10px] font-semibold mb-3">
+                        Dados Trabalhados
+                      </p>
+                      <p className="text-sm text-slate-300 leading-relaxed">{selectedProjectData?.data}</p>
+                    </div>
+                    <div className="rounded-[24px] border border-slate-900 bg-[#07101f] p-5">
+                      <p className="text-cyan-400 uppercase tracking-[0.28em] text-[10px] font-semibold mb-3">
+                        Indicadores
+                      </p>
+                      <ul className="grid gap-2 text-sm text-slate-300">
+                        {selectedProjectData?.metrics.map((metric) => (
+                          <li key={metric} className="flex items-start gap-2">
+                            <FaCheckCircle className="mt-1 shrink-0 text-xs text-emerald-400" />
+                            {metric}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="rounded-[24px] border border-emerald-500/20 bg-emerald-500/5 p-5">
+                      <p className="text-emerald-400 uppercase tracking-[0.28em] text-[10px] font-semibold mb-3">
+                        Impacto
+                      </p>
+                      <p className="text-sm text-slate-200 leading-relaxed">{selectedProjectData?.impact}</p>
+                    </div>
+                  </div>
+
                   {/* Ferramentas Utilizadas */}
                   <div className="rounded-[24px] border border-slate-900 bg-[#07101f] p-6">
                     <p className="text-cyan-400 uppercase tracking-[0.35em] text-[10px] font-semibold mb-3">
                       Ferramentas Utilizadas
                     </p>
                     <div className="flex flex-wrap gap-3">
-                      {projects.find(p => p.id === selectedProject)?.tools.map((tool) => (
+                      {selectedProjectData?.tools.map((tool) => (
                         <span
                           key={tool}
                           className="px-4 py-2 rounded-lg text-cyan-300 border border-cyan-500/40 bg-cyan-500/15 text-sm font-medium hover:bg-cyan-500/25 transition-colors"
@@ -666,24 +756,35 @@ function Index() {
             </p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {certificates.map((certificate) => (
-              <button
-                key={certificate.title}
-                onClick={() => setSelectedCertificate(certificate)}
-                className="group text-left rounded-[32px] border border-slate-800 bg-[#070b12] p-6 transition-all duration-300 hover:border-cyan-500/30 hover:-translate-y-1 hover:bg-[#08101f]"
-              >
-                <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-cyan-500/10 text-cyan-300 mb-5 transition-all duration-300 group-hover:bg-cyan-500/15">
-                  {certificate.type === 'pdf' ? <FaFilePdf className="text-xl" /> : <FaAward className="text-xl" />}
+          <div className="space-y-10">
+            {certificateGroups.map((group) => (
+              <div key={group.title}>
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="h-px flex-1 bg-slate-800" />
+                  <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-400">{group.title}</h3>
+                  <span className="h-px flex-1 bg-slate-800" />
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">{certificate.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{certificate.subtitle}</p>
-                {certificate.type === 'pdf' && (
-                  <span className="mt-4 inline-flex items-center rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
-                    Abrir PDF
-                  </span>
-                )}
-              </button>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.items.map((certificate) => (
+                    <button
+                      key={certificate.title}
+                      onClick={() => setSelectedCertificate(certificate)}
+                      className="group text-left rounded-[24px] border border-slate-800 bg-[#070b12] p-6 transition-all duration-300 hover:border-cyan-500/30 hover:-translate-y-1 hover:bg-[#08101f]"
+                    >
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-300 mb-5 transition-all duration-300 group-hover:bg-cyan-500/15">
+                        {certificate.type === 'pdf' ? <FaFilePdf className="text-xl" /> : <FaAward className="text-xl" />}
+                      </div>
+                      <h4 className="text-lg font-semibold text-white mb-2">{certificate.title}</h4>
+                      <p className="text-slate-400 text-sm leading-relaxed">{certificate.subtitle}</p>
+                      {certificate.type === 'pdf' && (
+                        <span className="mt-4 inline-flex items-center rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
+                          Abrir PDF
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -697,17 +798,28 @@ function Index() {
               <span className="text-cyan-500 font-mono text-xs tracking-widest uppercase">// Contato</span>
               <h2 className="mt-4 text-4xl font-bold text-white tracking-tight">Vamos conversar?</h2>
               <p className="mt-4 text-slate-400 leading-relaxed text-base">
-                Envie sua ideia, solicitação de projeto ou dúvida sobre dashboards e automações de dados. A mensagem chega ao e-mail vinculado ao Formspree.</p>
+                Envie sua ideia, solicitação de projeto ou dúvida sobre dashboards e automações de dados. Para retorno mais rápido, chame pelo WhatsApp.</p>
             </div>
 
             <div className="space-y-4">
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                className="block rounded-3xl border border-emerald-500/30 bg-emerald-500/10 p-5 transition hover:border-emerald-400/60 hover:bg-emerald-500/15"
+              >
+                <p className="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold mb-2">WhatsApp</p>
+                <p className="flex items-center gap-2 text-slate-100 font-semibold">
+                  <FaWhatsapp className="text-emerald-400" /> {whatsappDisplay}
+                </p>
+              </a>
               <div className="rounded-3xl border border-cyan-500/20 bg-[#070a14] p-5">
                 <p className="text-xs uppercase tracking-[0.3em] text-cyan-400 font-semibold mb-2">Email</p>
                 <p className="text-slate-200 font-medium">ibson.photos@gmail.com</p>
               </div>
               <div className="rounded-3xl border border-slate-900/70 bg-[#070a14] p-5">
                 <p className="text-xs uppercase tracking-[0.3em] text-cyan-400 font-semibold mb-2">Envio</p>
-                <p className="text-slate-400 text-sm">Sua mensagem é transmitida com segurança para o endereço configurado em Formspree.</p>
+                <p className="text-slate-400 text-sm">O formulário envia a mensagem para o e-mail configurado. O WhatsApp fica disponível para contato direto.</p>
               </div>
             </div>
           </div>
@@ -742,14 +854,22 @@ function Index() {
             >
               Enviar Mensagem
             </button>
-            <p className="text-xs text-slate-500 mt-2">A mensagem será enviada para o e-mail configurado no seu formulário Formspree.</p>
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 py-4 text-sm font-bold text-emerald-300 transition hover:bg-emerald-500/15"
+            >
+              <FaWhatsapp /> Chamar no WhatsApp
+            </a>
+            <p className="text-xs text-slate-500 mt-2">A mensagem será enviada para o e-mail configurado no formulário. Para contato rápido, use o WhatsApp.</p>
           </form>
         </div>
       </section>
 
       {/* FOOTER */}
-      <a href="#contato" className="fab-contact" title="Contato rápido">
-        <FaEnvelope className="text-[#021022]" />
+      <a href={whatsappLink} target="_blank" rel="noreferrer" className="fab-contact" title="Contato rápido pelo WhatsApp">
+        <FaWhatsapp className="text-[#021022]" />
       </a>
       {selectedCertificate && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4 py-6">
@@ -799,6 +919,9 @@ function Index() {
           <div className="flex flex-wrap justify-center gap-6 text-xs text-slate-400">
             <a href="mailto:ibson.photos@gmail.com" className="flex items-center hover:text-cyan-400 transition-colors">
               <FaEnvelope className="mr-2 text-cyan-500/80" /> ibson.photos@gmail.com
+            </a>
+            <a href={whatsappLink} target="_blank" rel="noreferrer" className="flex items-center hover:text-emerald-400 transition-colors">
+              <FaWhatsapp className="mr-2 text-emerald-500/80" /> {whatsappDisplay}
             </a>
             <a href="https://www.linkedin.com/in/ibson-vital/" target="_blank" rel="noreferrer" className="flex items-center hover:text-cyan-400 transition-colors">
               <FaLinkedin className="mr-2 text-cyan-500/80" /> LinkedIn
